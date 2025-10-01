@@ -1,0 +1,15 @@
+[build]
+builder = "dockerfile"
+dockerfilePath = "Dockerfile"
+
+[deploy]
+startCommand = "kong start"
+healthcheckPath = "/status"
+healthcheckTimeout = 300
+restartPolicyType = "on_failure"
+
+[[services]]
+name = "kong-gateway"
+
+[[services]]
+name = "postgres"

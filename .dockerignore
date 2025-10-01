@@ -1,0 +1,43 @@
+# Git
+.git
+.gitignore
+
+# Documentation
+*.md
+docs/
+autodoc/
+
+# Development files
+.devcontainer/
+.github/
+.ci/
+
+# Build artifacts
+build/
+.bazel*
+WORKSPACE
+MODULE.bazel
+BUILD.bazel
+
+# Test files
+spec/
+t/
+.busted
+.luacheckrc
+.luacov
+
+# Scripts and tools
+scripts/
+changelog/
+crate_locks/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Temporary files
+*.tmp
+*.log
+node_modules/
