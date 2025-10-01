@@ -1,27 +1,3 @@
 {
-  "$schema": "https://railway.app/railway.schema.json",
-  "build": {
-    "builder": "dockerfile",
-    "dockerfilePath": "Dockerfile"
-  },
-  "deploy": {
-    "startCommand": "kong start --run-migrations",
-    "healthcheckPath": "/status",
-    "healthcheckTimeout": 300,
-    "restartPolicyType": "on_failure"
-  },
-  "environments": {
-    "production": {
-      "variables": {
-        "KONG_DATABASE": "postgres",
-        "KONG_PROXY_ACCESS_LOG": "/dev/stdout",
-        "KONG_ADMIN_ACCESS_LOG": "/dev/stdout", 
-        "KONG_PROXY_ERROR_LOG": "/dev/stderr",
-        "KONG_ADMIN_ERROR_LOG": "/dev/stderr",
-        "KONG_ADMIN_LISTEN": "0.0.0.0:8001",
-        "KONG_PROXY_LISTEN": "0.0.0.0:8000",
-        "KONG_LOG_LEVEL": "info"
-      }
-    }
-  }
+  "$schema": "https://railway.app/railway.schema.json"
 }

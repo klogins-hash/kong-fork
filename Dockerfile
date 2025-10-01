@@ -1,14 +1,11 @@
-# Use the official Kong image as base
-FROM kong:3.8.0-ubuntu
+# Use the official Kong image with OpenResty included
+FROM kong:3.8.0
 
 # Set working directory
 WORKDIR /kong
 
 # Copy Kong configuration
-COPY kong.conf.default /etc/kong/kong.conf
-
-# Copy custom plugins if any
-COPY kong/ /usr/local/share/lua/5.1/kong/
+COPY kong.conf /etc/kong/kong.conf
 
 # Set environment variables for Railway deployment
 ENV KONG_DATABASE=postgres
@@ -31,5 +28,18 @@ EXPOSE 8000 8001 8443 8444
 HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \
   CMD kong health
 
+# Create startup script
+RUN echo '#!/bin/sh\n\
+echo "Waiting for database..."\n\
+until kong migrations list 2>/dev/null; do\n\
+  echo "Database not ready, waiting..."\n\
+  sleep 2\n\
+done\n\
+echo "Running migrations..."\n\
+kong migrations bootstrap || kong migrations up\n\
+echo "Starting Kong..."\n\
+exec kong start --run-migrations' > /usr/local/bin/start-kong.sh && \
+    chmod +x /usr/local/bin/start-kong.sh
+
 # Start Kong
-CMD ["sh", "-c", "kong migrations bootstrap && kong start --run-migrations"]
+CMD ["/usr/local/bin/start-kong.sh"]

@@ -3,7 +3,7 @@ builder = "dockerfile"
 dockerfilePath = "Dockerfile"
 
 [deploy]
-startCommand = "kong start"
+startCommand = "/usr/local/bin/start-kong.sh"
 healthcheckPath = "/status"
 healthcheckTimeout = 300
 restartPolicyType = "on_failure"
